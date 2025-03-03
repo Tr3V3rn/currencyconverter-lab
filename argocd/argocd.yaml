@@ -6,11 +6,11 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/abohmeed/currencyconverter.git'
+    repoURL: 'https://github.com/Tr3V3rn/currencyconverter-lab.git'
     targetRevision: HEAD
     path: argocd
   destination:
-    server: 'https://kubernetes.default.svc'
+    name: sandbox
     namespace: argocd
   syncPolicy:
     automated:
