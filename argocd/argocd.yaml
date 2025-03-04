@@ -10,7 +10,7 @@ spec:
     targetRevision: HEAD
     path: argocd
   destination:
-    server: https://28624FF24BBA4B30BCC6AB697BD8E7C5.gr7.us-east-2.eks.amazonaws.com
+    server: https://kubernetes.default.svc
     namespace: argocd
   syncPolicy:
     automated:
