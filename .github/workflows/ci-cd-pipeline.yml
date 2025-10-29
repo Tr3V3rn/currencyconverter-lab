@@ -35,6 +35,7 @@ jobs:
           secret-ids: |
             currencyconverter
           parse-json-secrets: true
+          name-transformation: none
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
