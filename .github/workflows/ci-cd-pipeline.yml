@@ -32,10 +32,12 @@ jobs:
       - name: Get Secrets from AWS Secrets Manager
         uses: aws-actions/aws-secretsmanager-get-secrets@v2
         with:
-          secret-ids: |
-            APIHOST,currencyconverter
-            APIKEY,currencyconverter
+          secret-ids: currencyconverter
           parse-json-secrets: true
+      - name: map to expected variable namespace
+        run: |
+          echo "APIHOST=$CURRENCYCONVERTER_APIHOST" >> $GITHUB_ENV
+          echo "APIKEY=$CURRENCYCONVERTER_APIKEY" >> $GITHUB_ENV
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
