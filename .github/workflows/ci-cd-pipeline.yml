@@ -33,9 +33,9 @@ jobs:
         uses: aws-actions/aws-secretsmanager-get-secrets@v2
         with:
           secret-ids: |
-            currencyconverter
+            APIHOST,currencyconverter
+            APIKEY,currencyconverter
           parse-json-secrets: true
-          name-transformation: none
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
