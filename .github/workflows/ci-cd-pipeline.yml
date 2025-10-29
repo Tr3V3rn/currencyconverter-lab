@@ -19,11 +19,22 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      APIHOST: ${{ secrets.APIHOST }}
-      APIKEY: ${{ secrets.APIKEY }}
+    # env:
+    #   APIHOST: ${{ secrets.APIHOST }}
+    #   APIKEY: ${{ secrets.APIKEY }}
     steps:
       - uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4 # Or a specific version
+        with:
+          role-to-assume: arn:aws:iam::683432915883:role/GitHubActions-AWS
+          aws-region: us-east-1
+      - name: Get Secrets from AWS Secrets Manager
+        uses: aws-actions/aws-secretsmanager-get-secrets@v2
+        with:
+          secret-ids: |
+            currencyconverter
+          parse-json-secrets: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
