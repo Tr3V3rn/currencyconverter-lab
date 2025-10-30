@@ -154,7 +154,7 @@ jobs:
       - name: Login to Argo CD and Sync
         run: |
           argocd login $ARGOCD_SERVER --username tre --password $ARGOCD_AUTH_TOKEN --grpc-web --insecure
-          argocd app sync $ARGOCD_APP_NAME --grpc-web --insecure
+          argocd app sync $ARGOCD_APP_NAME --grpc-web --insecure --auth-token $TOKEN
         env:
           ARGOCD_APP_NAME: currencyconverter-production
 

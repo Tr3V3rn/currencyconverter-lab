@@ -16,7 +16,7 @@ spec:
       - name: regcred
       containers:
       - name: currency-converter
-        image: 683432915883.dkr.ecr.us-east-1.amazonaws.com/currencyconverter:a35c4d6
+        image: 683432915883.dkr.ecr.us-east-1.amazonaws.com/currencyconverter:a35c4d61
         ports:
         - containerPort: 5555
         env:
