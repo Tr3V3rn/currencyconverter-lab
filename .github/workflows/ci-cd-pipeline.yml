@@ -118,6 +118,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::683432915883:role/GitHubActions-AWS
+          aws-region: us-east-1
+      - name: Get Secrets from AWS Secrets Manager
+        uses: aws-actions/aws-secretsmanager-get-secrets@v2
+        with:
+          secret-ids: |
+            ,argocd
+          parse-json-secrets: true
 
       - name: Configure Git
         run: |
@@ -135,22 +146,22 @@ jobs:
           git commit -m "Update image version to $IMAGE_TAG"
           git push
 
-  #     - name: Install Argo CD CLI
-  #       run: |
-  #         curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-  #         chmod +x /usr/local/bin/argocd
+      - name: Install Argo CD CLI
+        run: |
+          curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          chmod +x /usr/local/bin/argocd
 
-  #     - name: Login to Argo CD
-  #       run: |
-  #         argocd login $ARGOCD_SERVER --username admin --password $ARGOCD_AUTH_TOKEN
-  #       env:
-  #         ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
-  #         ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_AUTH_TOKEN }}
+      - name: Login to Argo CD
+        run: |
+          argocd login $ARGOCD_SERVER --username admin --password $ARGOCD_AUTH_TOKEN
+        # env:
+        #   ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+        #   ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_AUTH_TOKEN }}
 
-  #     - name: Sync Argo CD Application
-  #       run: |
-  #         argocd app sync $ARGOCD_APP_NAME
-  #       env:
-  #         ARGOCD_APP_NAME: currencyconverter-production
+      - name: Sync Argo CD Application
+        run: |
+          argocd app sync $ARGOCD_APP_NAME
+        env:
+          ARGOCD_APP_NAME: currencyconverter-production
 
 
