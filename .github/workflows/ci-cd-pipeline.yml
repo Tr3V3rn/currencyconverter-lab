@@ -75,6 +75,7 @@ jobs:
   run_job_with_aws:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4 # Or a specific version
         with:
