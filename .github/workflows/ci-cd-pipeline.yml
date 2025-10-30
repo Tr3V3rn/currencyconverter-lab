@@ -126,6 +126,7 @@ jobs:
 
       - name: Update Deployment Image
         run: |
+          git checkout main
           git pull --rebase origin main
           IMAGE_TAG=${{ needs.run_job_with_aws.outputs.image_tag }}
           echo "WHAT ARE YOU : $IMAGE_TAG"
