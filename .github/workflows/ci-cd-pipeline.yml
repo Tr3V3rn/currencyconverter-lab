@@ -79,6 +79,8 @@ jobs:
   run_job_with_aws:
     needs: build-and-push
     runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{needs.build-and-push.outputs.sha}}
     steps:
       - uses: actions/checkout@v4
       - name: Configure AWS Credentials
@@ -125,7 +127,8 @@ jobs:
       - name: Update Deployment Image
         run: |
           git pull --rebase origin main
-          IMAGE_TAG=${{ needs.build-and-push.outputs.sha }}
+          IMAGE_TAG=${{ needs.run_job_with_aws.outputs.image_tag }}
+          echo "WHAT ARE YOU : $IMAGE_TAG"
           sed -i 's|image: '${{ env.DOCKER_IMAGE }}':.*|image: '${{ env.DOCKER_IMAGE }}':'"$IMAGE_TAG"'|' k8s/base/deployment.yaml
           git add k8s/base/deployment.yaml
           git commit -m "Update image version to $IMAGE_TAG"
