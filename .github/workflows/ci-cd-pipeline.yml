@@ -73,6 +73,7 @@ jobs:
             TAGS="$COMMIT_SHA,latest"
           fi
           echo "DOCKER_IMAGE_TAGS=$TAGS" >> $GITHUB_ENV
+          echo "DOCKER_IMAGE_TAGS=$TAGS"
           
   run_job_with_aws:
     needs: build-and-push
@@ -99,6 +100,8 @@ jobs:
 
           # Build Docker image
           docker build -t $DOCKER_IMAGE .
+
+          echo "$DOCKER_IMAGE_TAGS"
 
           # Tag and Push Docker image for each determined tag
           IFS=',' read -ra TAGS <<< "$DOCKER_IMAGE_TAGS"
