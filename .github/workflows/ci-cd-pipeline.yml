@@ -11,6 +11,7 @@ on:
 
 permissions:
   id-token: write
+  contents: write
 
 env:
   DOCKER_IMAGE: 683432915883.dkr.ecr.us-east-1.amazonaws.com/currencyconverter
